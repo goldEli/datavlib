@@ -15,7 +15,13 @@
           attributeName="transform"
           type="rotate"
           values="0 25 25;360 25 25"
-          dur="1.5s"
+          dur="2s"
+          repeatCount="indefinite"
+        />
+        <animate
+          attributeName="stroke"
+          values="#3bebcb;#02bcfe;#3bebcb"
+          dur="4s"
           repeatCount="indefinite"
         />
       </circle>
@@ -33,7 +39,13 @@
           attributeName="transform"
           type="rotate"
           values="360 25 25;0 25 25"
-          dur="1.5s"
+          dur="2s"
+          repeatCount="indefinite"
+        />
+        <animate
+          attributeName="stroke"
+          values="#02bcfe;#3bebcb;#02bcfe"
+          dur="4s"
           repeatCount="indefinite"
         />
       </circle>
