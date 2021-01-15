@@ -14,9 +14,8 @@
         <animateTransform
           attributeName="transform"
           type="rotate"
-          from="0 25 25"
-          to="360 25 25"
-          dur="2s"
+          values="0 25 25;360 25 25"
+          dur="1.5s"
           repeatCount="indefinite"
         />
       </circle>
@@ -33,9 +32,8 @@
         <animateTransform
           attributeName="transform"
           type="rotate"
-          to="0 25 25"
-          from="360 25 25"
-          dur="2s"
+          values="360 25 25;0 25 25"
+          dur="1.5s"
           repeatCount="indefinite"
         />
       </circle>
