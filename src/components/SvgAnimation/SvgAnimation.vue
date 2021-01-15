@@ -1,6 +1,41 @@
 <template>
   <div>
     <div class="container">
+      <svg width="400" height="400">
+        <circle cx="0" cy="0" r="20" fill="red" stroke="black" stroke-width="1">
+          <animate
+            attributeName="cx"
+            attributeType="XML"
+            from="0"
+            to="100"
+            dur="2s"
+            repeatCount="1"
+            fill="freeze"
+          />
+          <animate
+            attributeName="cy"
+            attributeType="XML"
+            from="0"
+            to="100"
+            dur="2s"
+            repeatCount="1"
+            fill="freeze"
+          />
+        </circle>
+      </svg>
+    </div>
+    <div class="container">
+      <svg width="400" height="400">
+        <rect x="0" y="0" width="100" height="100" fill="red">
+          <set attributeName="x" attributeType="XML" to="10" begin="1s" />
+          <set attributeName="x" attributeType="XML" to="20" begin="2s" />
+          <set attributeName="x" attributeType="XML" to="30" begin="3s" />
+          <set attributeName="x" attributeType="XML" to="40" begin="4s" />
+          <set attributeName="x" attributeType="XML" to="50" begin="5s" />
+        </rect>
+      </svg>
+    </div>
+    <div class="container">
       <div class="container-line">
         <svg class="line" viewBox="0 0 400 400" p-id="5399" width="400" height="400">
           <line x1="0" y1="100" x2="400" y2="100" />
@@ -59,9 +94,8 @@ export default {
   name: 'SvgAnimation',
   setup() {
     onMounted(() => {
-      console.log(123)
-      const dom = document.getElementsByClassName('logo')[0]
-      console.log(dom.getTotalLength(), 123)
+      // const dom = document.getElementsByClassName('logo')[0]
+      // console.log(dom.getTotalLength(), 123)
     })
   },
 }
