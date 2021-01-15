@@ -1,13 +1,13 @@
 <template>
   <div class="dv-loading">
-    <svg width="200" height="200" viewBox="0 0 50 50">
+    <svg :width="width" :height="height" viewBox="0 0 50 50" preserveAspectRatio="xMidYMid meet">
       <circle
         cx="25"
         cy="25"
         r="22"
         fill="none"
         stroke-width="3"
-        stroke="#3bebcb"
+        :stroke="insideColor"
         stroke-dasharray="34"
         stroke-linecap="round"
       >
@@ -15,13 +15,13 @@
           attributeName="transform"
           type="rotate"
           values="0 25 25;360 25 25"
-          dur="2s"
+          :dur="`${dur}s`"
           repeatCount="indefinite"
         />
         <animate
           attributeName="stroke"
-          values="#3bebcb;#02bcfe;#3bebcb"
-          dur="4s"
+          :values="outsideColorAnimate"
+          :dur="`${+dur*2}s`"
           repeatCount="indefinite"
         />
       </circle>
@@ -39,22 +39,61 @@
           attributeName="transform"
           type="rotate"
           values="360 25 25;0 25 25"
-          dur="2s"
+          :dur="`${dur}s`"
           repeatCount="indefinite"
         />
         <animate
           attributeName="stroke"
-          values="#02bcfe;#3bebcb;#02bcfe"
-          dur="4s"
+          :values="insideColorAnimate"
+          :dur="`${+dur*2}s`"
           repeatCount="indefinite"
         />
       </circle>
     </svg>
+    <div class="dv-loading-content">
+      <slot />
+    </div>
   </div>
 </template>
 <script>
+import { computed } from 'vue'
 export default {
   name: 'DvLoading',
+  props: {
+    width: {
+      type: Number,
+      default: 50,
+    },
+    height: {
+      type: Number,
+      default: 50,
+    },
+    outsideColor: {
+      type: String,
+      default: '#3be6cb',
+    },
+    insideColor: {
+      type: String,
+      default: '#02bcfe',
+    },
+    dur: {
+      type: String,
+      default: '2',
+    },
+  },
+  setup(ctx) {
+    const { outsideColor, insideColor } = ctx
+    const outsideColorAnimate = computed(
+      () => `${outsideColor};${insideColor};${outsideColor}`
+    )
+    const insideColorAnimate = computed(
+      () => `${insideColor};${outsideColor};${insideColor}`
+    )
+    return {
+      outsideColorAnimate,
+      insideColorAnimate,
+    }
+  },
 }
 </script>
 <style lang="scss" scoped>
