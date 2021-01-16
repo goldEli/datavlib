@@ -7,9 +7,13 @@
             <rect x="5" y="5" width="390" height="390" fill="red" />
             <circle r="50" cx="150" cy="150" />
           </mask>
+          <linearGradient id="test-linear-gradient">
+            <stop offset="0%" stop-color="red" />
+            <stop offset="50%" stop-color="yellow" />
+            <stop offset="100%" stop-color="blue" />
+          </linearGradient>
         </defs>
-        <rect x="5" y="5" width="390" height="390" fill="red" />
-        <rect mask="url(#test-mask)" x="5" y="5" width="390" height="390" fill="blue" />
+        <rect x="5" y="5" width="390" height="390" fill="url(#test-linear-gradient)" />
       </svg>
     </div>
     <div class="container">
