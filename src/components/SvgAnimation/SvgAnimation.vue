@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container">
+    <div class="container grey">
       <svg width="400" height="400">
         <defs>
           <mask id="test-mask">
@@ -12,10 +12,9 @@
             <stop offset="50%" stop-color="yellow" />
             <stop offset="100%" stop-color="blue" />
           </linearGradient>
-          <radialGradient id="test-radial-gradient" cx="50%" cy="50%" fx="25%" fy="75%" r="50%">
-            <stop offset="0%" stop-color="white" />
-            <stop offset="10%" stop-color="yellow" />
-            <stop offset="95%" stop-color="red" />
+          <radialGradient id="test-radial-gradient" cx="50%" cy="50%" fx="50%" fy="50%" r="50%">
+            <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
           </radialGradient>
         </defs>
         <!-- <rect x="5" y="5" width="390" height="390" fill="url(#test-linear-gradient)" /> -->
@@ -176,5 +175,8 @@ export default {
   stroke: red;
   stroke-dasharray: 400;
   stroke-dashoffset: 400;
+}
+.grey {
+  background: #333;
 }
 </style>
