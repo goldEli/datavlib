@@ -2,19 +2,19 @@
   <div class="dv-fly-box" :ref="refName">
     <svg :width="width" :height="height">
       <defs>
-        <path id="fly-box-path" :d="path" fill="none" />
-        <radialGradient id="radial-gradient" cx="50%" cy="50%" fx="100%" fy="50%" r="50%">
+        <path :id="flyBoxPath" :d="path" fill="none" />
+        <radialGradient :id="radialGradient" cx="50%" cy="50%" fx="100%" fy="50%" r="50%">
           <stop offset="0%" stop-color="#fff" stop-opacity="1" />
           <stop offset="100%" stop-color="#fff" stop-opacity="0" />
         </radialGradient>
-        <mask id="fly-box-mask">
-          <circle x="0" y="0" :r="starLength" fill="url(#radial-gradient)">
+        <mask :id="flyBoxMask">
+          <circle x="0" y="0" :r="starLength" :fill="`url(#${radialGradient})`">
             <animateMotion :dur="`${dur}s`" :path="path" rotate="auto" repeatCount="indefinite" />
           </circle>
         </mask>
       </defs>
-      <use href="#fly-box-path" stroke-width="1" :stroke="lineColor" />
-      <use mask="url(#fly-box-mask)" href="#fly-box-path" stroke-width="3" :stroke="starColor" />
+      <use :href="`#${flyBoxPath}`" stroke-width="1" :stroke="lineColor" />
+      <use :mask="`url(#${flyBoxMask})`" :href="`#${flyBoxPath}`" stroke-width="3" :stroke="starColor" />
     </svg>
     <div class="dv-fly-box-content">
       <slot />
@@ -23,6 +23,13 @@
 </template>
 <script>
 import { ref, onMounted, getCurrentInstance, computed } from 'vue'
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = (Math.random() * 16) | 0,
+      v = c == 'x' ? r : (r & 0x3) | 0x8
+    return v.toString(16)
+  })
+}
 export default {
   name: 'DvFlyBox',
   props: {
@@ -47,6 +54,9 @@ export default {
     const width = ref(0)
     const height = ref(0)
     const refName = 'dvFlyBox'
+    const flyBoxPath = uuidv4()
+    const radialGradient = uuidv4()
+    const flyBoxMask = uuidv4()
     const path = computed(
       () =>
         `M5 5 L${width.value - 5} 5 L${width.value - 5} ${
@@ -64,6 +74,9 @@ export default {
       height,
       refName,
       path,
+      flyBoxPath,
+      flyBoxMask,
+      radialGradient,
     }
   },
 }
