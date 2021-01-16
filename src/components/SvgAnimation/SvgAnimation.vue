@@ -2,6 +2,18 @@
   <div>
     <div class="container">
       <svg width="400" height="400">
+        <defs>
+          <mask id="test-mask">
+            <rect x="5" y="5" width="390" height="390" fill="red" />
+            <circle r="50" cx="150" cy="150" />
+          </mask>
+        </defs>
+        <rect x="5" y="5" width="390" height="390" fill="red" />
+        <rect mask="url(#test-mask)" x="5" y="5" width="390" height="390" fill="blue" />
+      </svg>
+    </div>
+    <div class="container">
+      <svg width="400" height="400">
         <circle cx="0" cy="0" r="20" fill="red" stroke="black" stroke-width="1">
           <animate
             attributeName="cx"
