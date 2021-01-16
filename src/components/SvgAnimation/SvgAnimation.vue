@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container grey">
+    <div class="container">
       <svg width="400" height="400">
         <defs>
           <mask id="test-mask">
