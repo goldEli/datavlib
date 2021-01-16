@@ -12,8 +12,14 @@
             <stop offset="50%" stop-color="yellow" />
             <stop offset="100%" stop-color="blue" />
           </linearGradient>
+          <radialGradient id="test-radial-gradient" cx="50%" cy="50%" fx="25%" fy="75%" r="50%">
+            <stop offset="0%" stop-color="white" />
+            <stop offset="10%" stop-color="yellow" />
+            <stop offset="95%" stop-color="red" />
+          </radialGradient>
         </defs>
-        <rect x="5" y="5" width="390" height="390" fill="url(#test-linear-gradient)" />
+        <!-- <rect x="5" y="5" width="390" height="390" fill="url(#test-linear-gradient)" /> -->
+        <circle cx="50%" cy="50%" r="150" fill="url(#test-radial-gradient)" />
       </svg>
     </div>
     <div class="container">
