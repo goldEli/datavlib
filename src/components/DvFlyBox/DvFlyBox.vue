@@ -8,18 +8,13 @@
           <stop offset="100%" stop-color="#fff" stop-opacity="0" />
         </radialGradient>
         <mask id="fly-box-mask">
-          <circle x="0" y="0" r="100" fill="url(#radial-gradient)">
-            <animateMotion
-              dur="3s"
-              :path="path"
-              rotate="auto"
-              repeatCount="indefinite"
-            />
+          <circle x="0" y="0" :r="starLength" fill="url(#radial-gradient)">
+            <animateMotion :dur="`${dur}s`" :path="path" rotate="auto" repeatCount="indefinite" />
           </circle>
         </mask>
       </defs>
-      <use href="#fly-box-path" stroke-width="1" stroke="#235fa7" />
-      <use mask="url(#fly-box-mask)" href="#fly-box-path" stroke-width="3" stroke="#4fd2dd" />
+      <use href="#fly-box-path" stroke-width="1" :stroke="lineColor" />
+      <use mask="url(#fly-box-mask)" href="#fly-box-path" stroke-width="3" :stroke="starColor" />
     </svg>
     <div class="dv-fly-box-content">
       <slot />
@@ -30,6 +25,24 @@
 import { ref, onMounted, getCurrentInstance, computed } from 'vue'
 export default {
   name: 'DvFlyBox',
+  props: {
+    lineColor: {
+      type: String,
+      default: '#235fa7',
+    },
+    starColor: {
+      type: String,
+      default: '#4fd2dd',
+    },
+    starLength: {
+      type: [Number, String],
+      default: '50',
+    },
+    dur: {
+      type: [Number, String],
+      default: 1,
+    },
+  },
   setup(ctx) {
     const width = ref(0)
     const height = ref(0)
@@ -50,7 +63,7 @@ export default {
       width,
       height,
       refName,
-      path
+      path,
     }
   },
 }
@@ -70,6 +83,8 @@ export default {
   .dv-fly-box-content {
     width: 100%;
     height: 100%;
+    padding: 5px;
+    box-sizing: border-box;
   }
 }
 </style>
