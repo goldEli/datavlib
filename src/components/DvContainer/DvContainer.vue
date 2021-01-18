@@ -1,6 +1,8 @@
 <template>
   <div class="dv-container" :ref="refName">
-    <slot />
+    <template v-if="ready">
+      <slot />
+    </template>
   </div>
 </template>
 <script>
@@ -17,7 +19,8 @@ export default {
     const height = ref(0)
     const originWidth = ref(0)
     const originHeight = ref(0)
-    let context, dom
+    const ready = ref(false)
+    let context, dom, observer
 
     const initSize = () => {
       return new Promise((resolve) => {
@@ -64,23 +67,44 @@ export default {
       const scaleY = currentHeight / realHeight
       dom.style.transform = `scale(${scaleX}, ${scaleY})`
     }
-    const onResize = async() => {
+    const onResize = async () => {
       await initSize()
       updateScale()
     }
 
+    const initMutaionObserver = () => {
+      observer = new MutationObserver(onResize)
+      observer.observe(dom, {
+        attributes: true,
+        attributeFilter: ['style'],
+        attributeOldValue: true,
+      })
+    }
+    const removeMutaionObserver = () => {
+      if (observer) {
+        observer.disconnect()
+        observer.takeRecords()
+        observer = null
+      }
+    }
+
     onMounted(async () => {
+      ready.value = false
       context = getCurrentInstance().ctx
       await initSize()
       updateSize()
       updateScale()
       window.addEventListener('resize', debounce(onResize, 1000))
+      initMutaionObserver()
+      ready.value = true
     })
     onUnmounted(() => {
       window.removeEventListener('resize', onResize)
+      removeEventListener()
     })
     return {
       refName,
+      ready,
     }
   },
 }
