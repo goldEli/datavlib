@@ -4,13 +4,14 @@
   </div>
 </template>
 <script>
-import { ref, getCurrentInstance, onMounted } from 'vue'
+import { ref, getCurrentInstance, onMounted, onUnmounted, nextTick } from 'vue'
+import { debounce } from '../../utils'
 export default {
   name: 'DvContainer',
   props: {
     options: Object,
   },
-  setup(ctx) {
+  setup() {
     const refName = 'dv-container'
     const width = ref(0)
     const height = ref(0)
@@ -19,17 +20,27 @@ export default {
     let context, dom
 
     const initSize = () => {
-      // 大屏真实尺寸
-      if (context.options && context.options.width && context.options.height) {
-        width.value = context.options.width
-        height.value = context.options.height
-      } else {
-        width.value = dom.clientWidth
-        height.value = dom.clientHeight
-      }
-      // 获取画布尺寸
-      originWidth.value = window.screen.width
-      originHeight.value = window.screen.height
+      return new Promise((resolve) => {
+        nextTick(() => {
+          // 大屏真实尺寸
+          dom = context.$refs[refName]
+          if (
+            context.options &&
+            context.options.width &&
+            context.options.height
+          ) {
+            width.value = context.options.width
+            height.value = context.options.height
+          } else {
+            width.value = dom.clientWidth
+            height.value = dom.clientHeight
+          }
+          // 获取画布尺寸
+          originWidth.value = window.screen.width
+          originHeight.value = window.screen.height
+          resolve()
+        })
+      })
     }
 
     const updateSize = () => {
@@ -53,23 +64,21 @@ export default {
       const scaleY = currentHeight / realHeight
       dom.style.transform = `scale(${scaleX}, ${scaleY})`
     }
-    const onResize = () => {
-      updateSize()
+    const onResize = async() => {
+      await initSize()
       updateScale()
     }
 
-    onMounted(() => {
+    onMounted(async () => {
       context = getCurrentInstance().ctx
-      dom = context.$refs[refName]
-      initSize()
+      await initSize()
       updateSize()
       updateScale()
-      window.addEventListener('resize', onResize)
+      window.addEventListener('resize', debounce(onResize, 1000))
     })
     onUnmounted(() => {
       window.removeEventListener('resize', onResize)
     })
-    console.log(ctx.options)
     return {
       refName,
     }

@@ -4,6 +4,7 @@ import SvgAnimation from "./components/SvgAnimation";
 import DvLoading from "./components/DvLoading";
 import DvFlyBox from "./components/DvFlyBox";
 import DvContainer from "./components/DvContainer"
+import "regenerator-runtime";
 import './iconfont'
 
 export default function (Vue) {
