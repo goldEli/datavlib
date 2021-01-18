@@ -100,7 +100,7 @@ export default {
     })
     onUnmounted(() => {
       window.removeEventListener('resize', onResize)
-      removeEventListener()
+      removeMutaionObserver()
     })
     return {
       refName,
